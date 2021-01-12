@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'com.sustav'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE'
+    compile 'org.springframework.boot:spring-boot-maven-plugin:2.3.5.RELEASE'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.sustav.Application"
+    }
+}
