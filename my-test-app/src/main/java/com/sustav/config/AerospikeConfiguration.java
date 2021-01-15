@@ -1,6 +1,7 @@
 package com.sustav.config;
 
 import com.aerospike.client.Host;
+import com.sustav.repository.MovieRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,8 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 
-@EnableAerospikeRepositories(basePackages = "com.sustav.repository")
-//@EnableAerospikeRepositories(repositoryBaseClass = MovieRepository.class)
+//@EnableAerospikeRepositories(basePackages = "com.sustav.repository")
+@EnableAerospikeRepositories(basePackageClasses = {MovieRepository.class})
 @EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
 @Configuration
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
