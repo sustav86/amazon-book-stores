@@ -1,14 +1,21 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
+plugins {
+    id 'org.springframework.boot' version '2.3.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
 
 group 'com.sustav'
 version '1.0-SNAPSHOT'
@@ -18,12 +25,35 @@ repositories {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE'
-    compile 'org.springframework.boot:spring-boot-maven-plugin:2.3.5.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-test'
+    compile 'org.springframework.boot:spring-boot-starter'
+
+    compile 'org.springframework.kafka:spring-kafka:2.5.6.RELEASE'
+    testCompile 'org.springframework.kafka:spring-kafka-test:2.5.6.RELEASE'
+    // https://mvnrepository.com/artifact/org.testcontainers/kafka
+    testCompile group: 'org.testcontainers', name: 'kafka', version: '1.15.1'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    implementation "org.apache.kafka:kafka-clients:2.7.0"
+    testImplementation "org.apache.kafka:kafka-clients:2.7.0:test"
+    testImplementation "org.apache.kafka:kafka_2.12:2.7.0"
+    testImplementation "org.apache.kafka:kafka_2.12:2.7.0:test"
 }
 
 jar {
     manifest {
         attributes "Main-Class": "com.sustav.Application"
     }
+}
+
+test {
+    useJUnitPlatform()
 }
